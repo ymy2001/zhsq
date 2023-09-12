@@ -4,7 +4,9 @@ package com.zhsq.controller;
  
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhsq.mapper.HospitalMapper;
 import com.zhsq.pojo.Hospital;
+import com.zhsq.pojo.UserAddress;
 import com.zhsq.service.HospitalService;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -30,20 +32,30 @@ public class HospitalController {
      */
     @Autowired
     private HospitalService hospitalService;
+    @Autowired
+    private HospitalMapper hospitalMapper;
  
      /**
    * 分页查询
    * @param page 查询页数
-   * @param size 一页显示条数
+   * @param pageSize 一页显示条数
    * @return ·
    */
    @GetMapping("/page")
-   public R<Page<Hospital>> getAllByPage(int page, int size){
-   	Page<Hospital> hospitalPage = new Page<>(page, size);
-   	LambdaQueryWrapper<Hospital> queryWrapper = new LambdaQueryWrapper<>();
-   
-   	//执行查询
-   	hospitalService.page(hospitalPage);
-   	return R.success(hospitalPage);
+   public R<Page<Hospital>> getAllByPage(
+           @RequestParam(defaultValue = "1") int page,
+           @RequestParam(defaultValue = "5") int pageSize,
+           String address){
+     log.info("社区医院查询:{}",address);
+     long total = hospitalService.count();
+     //执行查询
+     LambdaQueryWrapper<Hospital> queryWrapper=new LambdaQueryWrapper<Hospital>()
+             .like(address!=null,Hospital::getAddress,address)
+             .or(address!=null)
+             .like(address!=null,Hospital::getHospitalName,address);
+     Page<Hospital> hospitalPage = new Page<>(page, pageSize, total);
+     List<Hospital> hospitalList = hospitalMapper.selectPage(hospitalPage, queryWrapper).getRecords();
+     hospitalPage.setRecords(hospitalList);
+     return R.success(hospitalPage, total);
    }
 }
