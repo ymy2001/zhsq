@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.context.BaseContext;
 import com.zhsq.mapper.UserAddressMapper;
+import com.zhsq.pojo.Result;
 import com.zhsq.pojo.UserAddress;
+import com.zhsq.pojo.dto.UserAddrDTO;
 import com.zhsq.service.UserAddressService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -53,5 +56,15 @@ public class UserAddressController {
     List<UserAddress> userAddressList = userAddressMapper.selectPage(userAddressPage, queryWrapper).getRecords();
     userAddressPage.setRecords(userAddressList);
     return R.success(userAddressPage, total);
+   }
+   /*
+   * 用户添加地址*/
+    @PostMapping("/add")
+   public Result addToAddr(@RequestBody UserAddrDTO userAddrDTO){
+        UserAddress userAddress=new UserAddress();
+        BeanUtils.copyProperties(userAddrDTO,userAddress);
+        log.info("用户地址插入：{}",userAddress);
+        userAddressService.addToAddr(userAddress);
+        return Result.success("添加成功");
    }
 }

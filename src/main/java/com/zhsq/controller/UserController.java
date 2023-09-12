@@ -110,9 +110,11 @@ public class UserController {
         String phoneNumber = user.getPhoneNumber();
         String username = user.getUsername();
         String password = user.getPassword();
-        password= DigestUtils.md5DigestAsHex(password.getBytes());
-        log.info("加密后：{}",password);
-        user.setPassword(password);
+        if (password!=null){
+            password= DigestUtils.md5DigestAsHex(password.getBytes());
+            log.info("加密后：{}",password);
+            user.setPassword(password);
+        }
         log.info("修改信息：{}，{}，{}",phoneNumber,username,password);
         //构造条件
         if (phoneNumber==null){
