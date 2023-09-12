@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhsq.mapper.FeeMapper">
+
+    <resultMap type="com.zhsq.pojo.Fee" id="FeeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="ownerId" column="owner_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="feeType" column="fee_type" jdbcType="INTEGER"/>
+        <result property="feeTime" column="fee_time" jdbcType="TIMESTAMP"/>
+        <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+        <result property="fee" column="fee" jdbcType="NUMERIC"/>
+        <result property="payStatus" column="pay_status" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectFeeDetail" resultType="com.zhsq.pojo.Fee">
+        select * from fee
+        <where>
+            <if test="feeType!=null">and fee_type=#{feeType}</if>
+            <if test="begin!=null">and pay_time>=#{begin}</if>
+            <if test="last != null">
+                AND fee.pay_time &lt; #{last}
+            </if>
+        </where>
+        and fee>0
+        and user_id=#{id}
+    </select>
+
+
+</mapper>
+
