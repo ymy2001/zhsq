@@ -34,7 +34,7 @@ public class ChatMoments {
     private Date releaseTime;
     //喜欢次数 
     private Integer likeCount;
-     
+     //评论数
     private Integer replyCount;
     //0仅自己可见 1全体可见 
     private Integer releaseStatus;

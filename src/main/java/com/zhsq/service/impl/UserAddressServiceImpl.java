@@ -57,6 +57,14 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
         }
     }
 
+    /*根据用户id删除地址*/
+    public void deleteAddr(Integer userId, Integer id) {
+        UserAddress userAddress=new UserAddress();
+        userAddress.setUserId(userId);
+        userAddress.setId(id);
+        removeById(userAddress);
+    }
+
     private void extracted(Integer userId, List<UserAddress> userSaveList, LambdaQueryWrapper<UserAddress> queryWrapper) {
         List<UserAddress> selectList = userAddressMapper.selectList(queryWrapper);
         userSaveList.addAll(selectList);

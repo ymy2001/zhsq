@@ -16,4 +16,8 @@ public interface UserAddressService extends IService<UserAddress> {
     /*
     * 插入地址*/
     void addToAddr(UserAddress userAddress);
+
+    /*
+    * 删除地址操作*/
+    void deleteAddr(Integer userId, Integer id);
 }

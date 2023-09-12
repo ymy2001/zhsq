@@ -55,6 +55,7 @@ public class UserAddressController {
     Page<UserAddress> userAddressPage = new Page<>(page, pageSize, total);
     List<UserAddress> userAddressList = userAddressMapper.selectPage(userAddressPage, queryWrapper).getRecords();
     userAddressPage.setRecords(userAddressList);
+    BaseContext.removeCurrentId();
     return R.success(userAddressPage, total);
    }
    /*
@@ -66,5 +67,12 @@ public class UserAddressController {
         log.info("用户地址插入：{}",userAddress);
         userAddressService.addToAddr(userAddress);
         return Result.success("执行成功");
+   }
+   @DeleteMapping("/delete")
+   public Result deleteAddr(Integer id){
+       Integer currentId = BaseContext.getCurrentId();
+       log.info("当前操作用户id{}，删除地址id：{}",currentId,id);
+       userAddressService.deleteAddr(currentId,id);
+       return Result.success("删除成功");
    }
 }
