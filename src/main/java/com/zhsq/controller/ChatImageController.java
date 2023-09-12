@@ -41,8 +41,6 @@ public class ChatImageController {
    public R<Page<ChatImage>> getAllByPage(int page, int size){
    	Page<ChatImage> chatImagePage = new Page<>(page, size);
    	LambdaQueryWrapper<ChatImage> queryWrapper = new LambdaQueryWrapper<>();
-   	//TODO 查询条件定制
-   
    	//执行查询
    	chatImageService.page(chatImagePage);
    	return R.success(chatImagePage);

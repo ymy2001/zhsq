@@ -55,6 +55,7 @@ public class UserAddressController {
     Page<UserAddress> userAddressPage = new Page<>(page, pageSize, total);
     List<UserAddress> userAddressList = userAddressMapper.selectPage(userAddressPage, queryWrapper).getRecords();
     userAddressPage.setRecords(userAddressList);
+    BaseContext.removeCurrentId();
     return R.success(userAddressPage, total);
    }
    /*
