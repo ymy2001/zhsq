@@ -32,23 +32,39 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
     public void addToAddr(UserAddress userAddress) {
         Integer status = userAddress.getAddressStatus();
         Integer userId = userAddress.getUserId();
+        Integer id = userAddress.getId();
         List<UserAddress> userSaveList=new ArrayList<>();
         LambdaQueryWrapper<UserAddress> queryWrapper=new LambdaQueryWrapper<UserAddress>()
                 .eq(UserAddress::getUserId,userId);
+        if (id!=null){
+            extracted(userId, userSaveList, queryWrapper);
+            lambdaUpdate().set(UserAddress::getAddressStatus,status)
+                    .set(UserAddress::getAddress,userAddress.getAddress())
+                    .set(UserAddress::getPhoneNumber,userAddress.getPhoneNumber())
+                    .set(UserAddress::getName,userAddress.getName())
+                    .eq(UserAddress::getUserId,userId)
+                    .eq(UserAddress::getId,id)
+                    .update();
+            return;
+        }
         if (status==1){
-            List<UserAddress> selectList = userAddressMapper.selectList(queryWrapper);
-            userSaveList.addAll(selectList);
-            for (UserAddress address : userSaveList) {
-                address.setAddressStatus(0);
-                lambdaUpdate().set(UserAddress::getAddressStatus,0)
-                        .eq(UserAddress::getUserId,userId)
-                        .update();
-            }
+            extracted(userId, userSaveList, queryWrapper);
             save(userAddress);
 
         }
         if (status==0){
             save(userAddress);
+        }
+    }
+
+    private void extracted(Integer userId, List<UserAddress> userSaveList, LambdaQueryWrapper<UserAddress> queryWrapper) {
+        List<UserAddress> selectList = userAddressMapper.selectList(queryWrapper);
+        userSaveList.addAll(selectList);
+        for (UserAddress address : userSaveList) {
+            address.setAddressStatus(0);
+            lambdaUpdate().set(UserAddress::getAddressStatus, 0)
+                    .eq(UserAddress::getUserId, userId)
+                    .update();
         }
     }
 }

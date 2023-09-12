@@ -7,8 +7,10 @@ import com.zhsq.context.BaseContext;
 import com.zhsq.pojo.Fee;
 import com.zhsq.pojo.Result;
 import com.zhsq.pojo.dto.FeeDetailDTO;
+import com.zhsq.pojo.dto.FeePayDTO;
 import com.zhsq.pojo.vo.FeeVO;
 import com.zhsq.service.FeeService;
+import com.zhsq.utils.DateUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -16,7 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 import com.zhsq.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +53,6 @@ public class FeeController {
    	Page<Fee> feePage = new Page<>(page, size);
    	LambdaQueryWrapper<Fee> queryWrapper = new LambdaQueryWrapper<>();
    	//TODO查询条件定制
-   
    	//执行查询
    	feeService.page(feePage);
    	return R.success(feePage);
@@ -71,4 +76,16 @@ public class FeeController {
        List<FeeDetailDTO> feeDtail=feeService.getDetailByTimeAndType(detailTime,feeType,currentId);
        return Result.success(feeDtail);
    }
+   /*
+   * 用户缴费实现*/
+    @PostMapping("/payment")
+    public Result<Fee> payment(@RequestBody FeePayDTO feePayDTO){
+        Integer currentId = BaseContext.getCurrentId();
+        feePayDTO.setPayTime(DateUtils.toDate(LocalDateTime.now()));
+        feePayDTO.setUserId(currentId);
+        log.info("用户缴费：{},当前用户id：{}",feePayDTO,currentId);
+        Fee feeMsg=feeService.userPayment(feePayDTO);
+        BaseContext.removeCurrentId();
+        return Result.success("支付成功",feeMsg);
+    }
 }

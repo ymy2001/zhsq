@@ -65,6 +65,6 @@ public class UserAddressController {
         BeanUtils.copyProperties(userAddrDTO,userAddress);
         log.info("用户地址插入：{}",userAddress);
         userAddressService.addToAddr(userAddress);
-        return Result.success("添加成功");
+        return Result.success("执行成功");
    }
 }

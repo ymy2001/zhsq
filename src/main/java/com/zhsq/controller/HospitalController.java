@@ -41,7 +41,6 @@ public class HospitalController {
    public R<Page<Hospital>> getAllByPage(int page, int size){
    	Page<Hospital> hospitalPage = new Page<>(page, size);
    	LambdaQueryWrapper<Hospital> queryWrapper = new LambdaQueryWrapper<>();
-   	//TODO 查询条件定制
    
    	//执行查询
    	hospitalService.page(hospitalPage);
