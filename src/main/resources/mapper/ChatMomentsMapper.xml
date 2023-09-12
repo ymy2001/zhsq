@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhsq.mapper.ChatMomentsMapper">
+
+    <resultMap type="com.zhsq.pojo.ChatMoments" id="ChatMomentsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="contents" column="contents" jdbcType="VARCHAR"/>
+        <result property="location" column="location" jdbcType="VARCHAR"/>
+        <result property="releaseTime" column="release_time" jdbcType="TIMESTAMP"/>
+        <result property="likeCount" column="like_count" jdbcType="INTEGER"/>
+        <result property="replyCount" column="reply_count" jdbcType="INTEGER"/>
+        <result property="releaseStatus" column="release_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    
+</mapper>
+
