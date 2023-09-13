@@ -1,6 +1,5 @@
 package com.zhsq.mapper;
- 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhsq.pojo.Fee;
 import org.apache.ibatis.annotations.Mapper;

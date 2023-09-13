@@ -1,8 +1,7 @@
 package com.zhsq.controller;
- 
- 
- 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.context.BaseContext;
 import com.zhsq.mapper.UserAddressMapper;
@@ -10,13 +9,12 @@ import com.zhsq.pojo.Result;
 import com.zhsq.pojo.UserAddress;
 import com.zhsq.pojo.dto.UserAddrDTO;
 import com.zhsq.service.UserAddressService;
-import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import com.zhsq.utils.R;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.io.Serializable;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
  
 /**

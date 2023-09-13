@@ -1,18 +1,15 @@
 package com.zhsq.controller;
- 
- 
- 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhsq.mapper.GoodsTypeMapper;
 import com.zhsq.pojo.GoodsType;
 import com.zhsq.service.GoodsTypeService;
-import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import com.zhsq.utils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.io.Serializable;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
  
 /**
  * 商品类表(GoodsType)表控制层
@@ -30,21 +27,25 @@ public class GoodsTypeController {
      */
     @Autowired
     private GoodsTypeService goodsTypeService;
+    @Autowired
+    private GoodsTypeMapper goodsTypeMapper;
  
      /**
    * 分页查询
    * @param page 查询页数
-   * @param size 一页显示条数
+   * @param pageSize 一页显示条数
    * @return ·
    */
    @GetMapping("/page")
-   public R<Page<GoodsType>> getAllByPage(int page, int size){
-   	Page<GoodsType> goodsTypePage = new Page<>(page, size);
+   public R<Page<GoodsType>> getAllByPage(@RequestParam(defaultValue = "1") int page,
+                                          @RequestParam(defaultValue = "5") int pageSize){
+   	Page<GoodsType> goodsTypePage = new Page<>(page, pageSize);
    	LambdaQueryWrapper<GoodsType> queryWrapper = new LambdaQueryWrapper<>();
+       Long count = goodsTypeMapper.selectCount(queryWrapper);
    	//TODO 查询条件定制
-   
+
    	//执行查询
    	goodsTypeService.page(goodsTypePage);
-   	return R.success(goodsTypePage);
+   	return R.success(goodsTypePage,count);
    }
 }

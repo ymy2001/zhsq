@@ -1,19 +1,15 @@
 package com.zhsq.controller;
- 
- 
- 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.mapper.NoticeMapper;
 import com.zhsq.pojo.Notice;
 import com.zhsq.service.NoticeService;
-import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import com.zhsq.utils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.io.Serializable;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
  
 /**
  * 通知(Notice)表控制层

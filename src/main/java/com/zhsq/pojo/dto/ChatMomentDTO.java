@@ -1,12 +1,10 @@
 package com.zhsq.pojo.dto;
 
-import com.zhsq.pojo.ChatImage;
 import com.zhsq.pojo.ChatMoments;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Data
