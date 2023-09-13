@@ -4,6 +4,7 @@ package com.zhsq.controller;
  
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhsq.mapper.NoticeMapper;
 import com.zhsq.pojo.Notice;
 import com.zhsq.service.NoticeService;
 import org.springframework.web.bind.annotation.*;
@@ -30,21 +31,27 @@ public class NoticeController {
      */
     @Autowired
     private NoticeService noticeService;
+    @Autowired
+    private NoticeMapper noticeMapper;
  
      /**
    * 分页查询
    * @param page 查询页数
-   * @param size 一页显示条数
+   * @param pageSize 一页显示条数
    * @return ·
    */
-   @GetMapping("/page")
-   public R<Page<Notice>> getAllByPage(int page, int size){
-   	Page<Notice> noticePage = new Page<>(page, size);
+   @GetMapping("/notice")
+   public R<Page<Notice>> getAllByPage(@RequestParam(defaultValue = "1") int page,
+                                       @RequestParam(defaultValue = "4") int pageSize,
+                                        Integer noticeId){
+   	Page<Notice> noticePage = new Page<>(page, pageSize);
    	LambdaQueryWrapper<Notice> queryWrapper = new LambdaQueryWrapper<>();
-   	//TODO 查询条件定制
-   
+       long total = noticeMapper.selectCount(queryWrapper);
+   	//查询条件定制
+       queryWrapper.orderByDesc(Notice::getCreateTime)
+               .eq(noticeId!=null,Notice::getId,noticeId);
    	//执行查询
-   	noticeService.page(noticePage);
-   	return R.success(noticePage);
+   	noticeService.page(noticePage,queryWrapper);
+   	return R.success(noticePage,total);
    }
 }

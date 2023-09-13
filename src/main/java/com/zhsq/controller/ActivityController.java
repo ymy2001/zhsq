@@ -47,6 +47,7 @@ public class ActivityController {
            @RequestParam(defaultValue = "3") int pageSize){
    	   Page<Activity> activityPage = new Page<>(page, pageSize);
    	   LambdaQueryWrapper<Activity> queryWrapper = new LambdaQueryWrapper<>();
+          queryWrapper.orderByDesc(Activity::getStartTime);
        long total = activityMapper.selectCount(queryWrapper);
        activityPage.setTotal(total);
        log.info("查询总记录数：{}",total);

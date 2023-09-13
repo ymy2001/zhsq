@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhsq.mapper.GoodsMapper">
+
+    <resultMap type="com.zhsq.pojo.Goods" id="GoodsMap">
+        <result property="gid" column="gid" jdbcType="INTEGER"/>
+        <result property="typeid" column="typeId" jdbcType="INTEGER"/>
+        <result property="mainpic" column="mainPic" jdbcType="VARCHAR"/>
+        <result property="shorttitle" column="shortTitle" jdbcType="VARCHAR"/>
+        <result property="goodsname" column="goodsName" jdbcType="VARCHAR"/>
+        <result property="descriptions" column="descriptions" jdbcType="VARCHAR"/>
+        <result property="originalprice" column="originalPrice" jdbcType="NUMERIC"/>
+        <result property="discount" column="discount" jdbcType="NUMERIC"/>
+        <result property="soldcount" column="soldCount" jdbcType="INTEGER"/>
+        <result property="brand" column="brand" jdbcType="VARCHAR"/>
+        <result property="details" column="details" jdbcType="VARCHAR"/>
+        <result property="isnewyearselection" column="isNewYearSelection" jdbcType="INTEGER"/>
+        <result property="isbrandselection" column="isBrandSelection" jdbcType="INTEGER"/>
+    </resultMap>
+
+    
+</mapper>
+

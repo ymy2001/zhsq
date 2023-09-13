@@ -9,6 +9,7 @@ import com.zhsq.context.BaseContext;
 import com.zhsq.mapper.ChatMomentsMapper;
 import com.zhsq.pojo.*;
 import com.zhsq.pojo.dto.ChatMomentDTO;
+import com.zhsq.pojo.dto.ChatMomentPublicDTO;
 import com.zhsq.pojo.vo.ChatMomentVO;
 import com.zhsq.service.ChatMomentsService;
 import org.springframework.beans.BeanUtils;
@@ -44,8 +45,11 @@ public class ChatMomentsController {
     /*
     * 发布说说*/
     @PostMapping("/public")
-    public Result publicTalk(@RequestBody ChatMomentDTO chatMomentDTO){
-        return null;
+    public Result publicTalk(@RequestBody ChatMomentPublicDTO chatMomentDTO){
+        Integer currentId = BaseContext.getCurrentId();
+        log.info("操作用户：{},提交信息：{}",currentId,chatMomentDTO);
+        chatMomentsService.publicChatMoment(currentId,chatMomentDTO);
+        return Result.success("发布成功");
     }
      /**
    * 分页查询
@@ -63,8 +67,8 @@ public class ChatMomentsController {
        User user = Db.lambdaQuery(User.class).eq(User::getId, currentId).one();
        ChatMomentVO chatMomentVO=new ChatMomentVO();
        BeanUtils.copyProperties(user,chatMomentVO);
-       Page<ChatMoments> chatMomentsPage = new Page<>(page, pageSize);
    	   LambdaQueryWrapper<ChatMoments> queryWrapper = new LambdaQueryWrapper<>();
+          queryWrapper.orderByDesc(ChatMoments::getReleaseTime);
    	   //执行查询
        Page<ChatMoments> chatMomentsPage1 = new Page<>(page, pageSize);
        List<ChatMoments> records = chatMomentsMapper.selectPage(chatMomentsPage1, queryWrapper).getRecords();
@@ -96,5 +100,12 @@ public class ChatMomentsController {
        log.info("封装用户信息：{}",chatMomentVO);
        BaseContext.removeCurrentId();
        return Result.success(chatMomentVO);
+   }
+   /*
+   点赞功能实现*/
+    @PostMapping("/like")
+   public Result likeCount(Integer chatId,Integer status){
+        chatMomentsService.updateLikeCount(chatId,status);
+       return Result.success("点赞成功");
    }
 }
