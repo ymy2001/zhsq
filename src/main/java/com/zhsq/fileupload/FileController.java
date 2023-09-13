@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -48,5 +50,31 @@ public class FileController {
     }
     /*
     * 动态说说发表上传*/
+    @PostMapping("/chatMomentss/upload")
+    public Result<List<String>> chatPublic(MultipartFile[] publicImage) throws IOException{
+        List<String> imgList=new ArrayList<>();
+        //获取图片数组的长度
+        int length = publicImage.length;
+        if (length>5){
+            return Result.error("图片数量超限");
+        }
+        for (MultipartFile image : publicImage) {
+            log.info("文件上传{}",image.getOriginalFilename());
+            //文件大小验证
+            long size = image.getSize();
+            if (size>=10 * 1024 * 1024){
+                return Result.error("文件上传失败,大小超限");
+            }
+            //调用阿里云oss上传文件
+            String url = aliOSSUtils.upload(image);
+            log.info("文件上传完成:url：{}",url);
+            //添加保存链接并返回
+            imgList.add(url);
+        }
+        if (imgList.size()!=length){
+            return Result.error("图片上传失败");
+        }
+        return Result.success(imgList);
+    }
 
 }

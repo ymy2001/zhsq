@@ -41,6 +41,12 @@ public class ChatMomentsController {
 
     @Autowired
     private ChatMomentsMapper chatMomentsMapper;
+    /*
+    * 发布说说*/
+    @PostMapping("/public")
+    public Result publicTalk(@RequestBody ChatMomentDTO chatMomentDTO){
+        return null;
+    }
      /**
    * 分页查询
    * @param page 查询页数

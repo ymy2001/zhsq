@@ -2,6 +2,9 @@ package com.zhsq.pojo;
  
 import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
@@ -30,6 +33,7 @@ public class ChatMoments {
     //地点 
     private String location;
     //发布时间
+    @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm",timezone="Asia/Shanghai")
     private Date releaseTime;
     //喜欢次数 
