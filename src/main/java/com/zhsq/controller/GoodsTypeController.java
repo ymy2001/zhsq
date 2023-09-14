@@ -2,6 +2,7 @@ package com.zhsq.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.mapper.GoodsTypeMapper;
 import com.zhsq.pojo.GoodsType;
@@ -42,7 +43,6 @@ public class GoodsTypeController {
    	Page<GoodsType> goodsTypePage = new Page<>(page, pageSize);
    	LambdaQueryWrapper<GoodsType> queryWrapper = new LambdaQueryWrapper<>();
        Long count = goodsTypeMapper.selectCount(queryWrapper);
-   	//TODO 查询条件定制
 
    	//执行查询
    	goodsTypeService.page(goodsTypePage);
