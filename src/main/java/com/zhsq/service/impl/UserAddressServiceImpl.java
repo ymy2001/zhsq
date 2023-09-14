@@ -2,9 +2,11 @@ package com.zhsq.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhsq.context.BaseContext;
 import com.zhsq.mapper.UserAddressMapper;
 import com.zhsq.pojo.UserAddress;
 import com.zhsq.service.UserAddressService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +20,24 @@ import java.util.List;
  * @since 2023-09-11 08:49:41
  */
 @Service
+@Slf4j
 public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserAddress> implements UserAddressService {
     @Autowired
     UserAddressMapper userAddressMapper=getBaseMapper();
 
     /*
     * 插入用户地址*/
-    public void addToAddr(UserAddress userAddress) {
+    public void addToAddr(UserAddress userAddress,Integer currentId) {
         Integer status = userAddress.getAddressStatus();
+        userAddress.setUserId(currentId);
         Integer userId = userAddress.getUserId();
+        log.info("用户id：{}",userId);
+        log.info("jwtID：{}",currentId);
         Integer id = userAddress.getId();
         List<UserAddress> userSaveList=new ArrayList<>();
         LambdaQueryWrapper<UserAddress> queryWrapper=new LambdaQueryWrapper<UserAddress>()
                 .eq(UserAddress::getUserId,userId);
+        log.info("id测试：{}",id);
         if (id!=null){
             extracted(userId, userSaveList, queryWrapper);
             lambdaUpdate().set(UserAddress::getAddressStatus,status)

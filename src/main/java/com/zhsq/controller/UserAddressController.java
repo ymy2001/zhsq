@@ -62,8 +62,10 @@ public class UserAddressController {
    public Result addToAddr(@RequestBody UserAddrDTO userAddrDTO){
         UserAddress userAddress=new UserAddress();
         BeanUtils.copyProperties(userAddrDTO,userAddress);
+        Integer currentId = BaseContext.getCurrentId();
         log.info("用户地址插入：{}",userAddress);
-        userAddressService.addToAddr(userAddress);
+        userAddressService.addToAddr(userAddress,currentId);
+        BaseContext.removeCurrentId();
         return Result.success("执行成功");
    }
    @DeleteMapping("/delete")

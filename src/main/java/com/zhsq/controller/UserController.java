@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 用户表(User)表控制层
@@ -108,7 +109,11 @@ public class UserController {
         String phoneNumber = user.getPhoneNumber();
         String username = user.getUsername();
         String password = user.getPassword();
+        if (Objects.equals(password, "")){
+            return Result.error("修改失败");
+        }
         if (password!=null){
+            log.info("pwd:{}",password);
             password= DigestUtils.md5DigestAsHex(password.getBytes());
             log.info("加密后：{}",password);
             user.setPassword(password);

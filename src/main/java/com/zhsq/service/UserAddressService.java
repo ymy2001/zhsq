@@ -13,7 +13,7 @@ public interface UserAddressService extends IService<UserAddress> {
 
     /*
     * 插入地址*/
-    void addToAddr(UserAddress userAddress);
+    void addToAddr(UserAddress userAddress,Integer currentId);
 
     /*
     * 删除地址操作*/
