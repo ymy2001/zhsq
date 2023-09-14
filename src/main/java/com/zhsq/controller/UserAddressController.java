@@ -2,6 +2,7 @@ package com.zhsq.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.context.BaseContext;
 import com.zhsq.mapper.UserAddressMapper;
@@ -69,10 +70,18 @@ public class UserAddressController {
         return Result.success("执行成功");
    }
    @DeleteMapping("/delete")
-   public Result deleteAddr(Integer id){
+   public Result deleteAddr(@RequestParam Integer id){
        Integer currentId = BaseContext.getCurrentId();
        log.info("当前操作用户id{}，删除地址id：{}",currentId,id);
+       QueryWrapper<UserAddress> addr=new QueryWrapper<>();
+       addr.lambda().eq(UserAddress::getUserId,currentId)
+                       .eq(UserAddress::getId,id);
+       Long count = userAddressMapper.selectCount(addr);
+       if (count==0){
+           return Result.error("删除失败");
+       }
        userAddressService.deleteAddr(currentId,id);
+       BaseContext.removeCurrentId();
        return Result.success("删除成功");
    }
 }
