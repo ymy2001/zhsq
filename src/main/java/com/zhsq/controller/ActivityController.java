@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.mapper.ActivityMapper;
 import com.zhsq.pojo.Activity;
+import com.zhsq.pojo.Result;
 import com.zhsq.service.ActivityService;
 import com.zhsq.utils.R;
 import lombok.extern.slf4j.Slf4j;
@@ -49,5 +50,11 @@ public class ActivityController {
    	   //执行查询
        Page<Activity> page1 = activityService.page(activityPage);
        return R.success(activityPage,total);
+   }
+   @GetMapping("/detail")
+   public Result<Activity> getDetail(Integer aid){
+       log.info("通知详情：{}",aid);
+       Activity byId = activityService.getById(aid);
+       return Result.success(byId);
    }
 }
