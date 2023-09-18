@@ -66,6 +66,7 @@ public class FeeController {
            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime detailTime,
            Integer feeType
    ){
+       log.info("feeType:{}",feeType);
        Integer currentId = BaseContext.getCurrentId();
        log.info("查询时间：{}，费用类型：{},当前操作用户id：{}",detailTime,feeType,currentId);
        List<FeeDetailDTO> feeDtail=feeService.getDetailByTimeAndType(detailTime,feeType,currentId);
@@ -83,4 +84,7 @@ public class FeeController {
         BaseContext.removeCurrentId();
         return Result.success("支付成功",feeMsg);
     }
+    /*
+    * 根据业主的id查询对应信息*/
+
 }

@@ -37,9 +37,10 @@ public class NoticeController {
    * @return ·
    */
    @GetMapping("/notice")
-   public R<Page<Notice>> getAllByPage(@RequestParam(defaultValue = "1") int page,
-                                       @RequestParam(defaultValue = "4") int pageSize,
+   public R<Page<Notice>> getAllByPage(@RequestParam(defaultValue = "1") Integer page,
+                                       @RequestParam(defaultValue = "4") Integer pageSize,
                                         Integer noticeId){
+       log.info("查询id：{}",noticeId);
    	Page<Notice> noticePage = new Page<>(page, pageSize);
    	LambdaQueryWrapper<Notice> queryWrapper = new LambdaQueryWrapper<>();
        long total = noticeMapper.selectCount(queryWrapper);
