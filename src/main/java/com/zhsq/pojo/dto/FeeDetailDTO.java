@@ -17,6 +17,8 @@ public class FeeDetailDTO {
     private String ownerId;
     //费用
     private Double fee;
+    //费用类型
+    private Integer feeType;
     //0代表未支付,1代表已支付，2代表取消支付
     private Integer payStatus;
     //缴费时间

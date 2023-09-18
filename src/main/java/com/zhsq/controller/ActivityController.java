@@ -33,10 +33,24 @@ public class ActivityController {
  
      /**
    * 分页查询
-   * @param page 查询页数
-   * @param pageSize 一页显示条数
+   * @param pa 查询页数
+   * @param ps 一页显示条数
    * @return ·
    */
+     @GetMapping("/effect")
+     public R<Page<Activity>> getByPage(
+             @RequestParam(defaultValue = "1") int pa,
+             @RequestParam(defaultValue = "3") int ps){
+         Page<Activity> activityPage = new Page<>(pa, ps);
+         LambdaQueryWrapper<Activity> queryWrapper = new LambdaQueryWrapper<>();
+         queryWrapper.orderByDesc(Activity::getStartTime);
+         long total = activityMapper.selectCount(queryWrapper);
+         activityPage.setTotal(total);
+         log.info("查询总记录数：{}",total);
+         //执行查询
+         Page<Activity> page1 = activityService.page(activityPage);
+         return R.success(activityPage,total);
+     }
    @GetMapping
    public R<Page<Activity>> getAllByPage(
            @RequestParam(defaultValue = "1") int page,
