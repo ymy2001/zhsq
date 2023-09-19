@@ -3,8 +3,10 @@ package com.zhsq.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.zhsq.context.BaseContext;
 import com.zhsq.pojo.Fee;
+import com.zhsq.pojo.Owner;
 import com.zhsq.pojo.Result;
 import com.zhsq.pojo.dto.FeeDetailDTO;
 import com.zhsq.pojo.dto.FeePayDTO;
@@ -83,6 +85,10 @@ public class FeeController {
         log.info("费用：{}，类型：{}，公司：{}，用户：{}",fee,feeType,companyId,ownerId);
         if(feePayDTO.getFee()==null){
             return Result.error("缴费失败");
+        }
+        Owner one = Db.lambdaQuery(Owner.class).eq(Owner::getOwnerId, ownerId).one();
+        if (one==null){
+            return Result.error("缴费编号不存在");
         }
         Integer currentId = BaseContext.getCurrentId();
         feePayDTO.setPayTime(DateUtils.toDate(LocalDateTime.now()));
