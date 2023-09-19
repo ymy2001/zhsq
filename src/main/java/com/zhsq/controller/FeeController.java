@@ -76,6 +76,14 @@ public class FeeController {
    * 用户缴费实现*/
     @PostMapping("/payment")
     public Result<Fee> payment(@RequestBody FeePayDTO feePayDTO){
+        Double fee = feePayDTO.getFee();
+        Integer feeType = feePayDTO.getFeeType();
+        String companyId = feePayDTO.getCompanyId();
+        String ownerId = feePayDTO.getOwnerId();
+        log.info("费用：{}，类型：{}，公司：{}，用户：{}",fee,feeType,companyId,ownerId);
+        if(feePayDTO.getFee()==null){
+            return Result.error("缴费失败");
+        }
         Integer currentId = BaseContext.getCurrentId();
         feePayDTO.setPayTime(DateUtils.toDate(LocalDateTime.now()));
         feePayDTO.setUserId(currentId);

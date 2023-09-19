@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
- 
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 业主表(Owner)表控制层
  *
@@ -41,8 +44,28 @@ public class OwnerController {
         LambdaQueryWrapper<Owner> lqw=new LambdaQueryWrapper<Owner>()
                 .eq(Owner::getOwnerId,ownerId);
         Owner one = ownerService.getOne(lqw);
+        if (one==null){
+            return Result.error("null");
+        }
+        String ownerAddress = one.getOwnerAddress();
+        String ownerName = one.getOwnerName();
+        String maskedAddress = maskAddress(ownerAddress);
+
+        String name = maskLastCharacter(ownerName);
+        log.info("业主姓名：{}",name);
+        log.info("业主地址：{}",maskedAddress);
+        one.setOwnerName(name);
+        one.setOwnerAddress(maskedAddress);
         BeanUtils.copyProperties(one,fv);
         return Result.success(fv);
+    }
+    public static String maskLastCharacter(String name) {
+        return name.substring(0, name.length() - 1) + "*";
+    }
+    public static String maskAddress(String address) {
+        Pattern pattern = Pattern.compile(".{2}(区|单元|楼)");
+        Matcher matcher = pattern.matcher(address);
+        return matcher.replaceAll("**$1");
     }
 
      /**

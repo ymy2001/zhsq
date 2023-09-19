@@ -1,8 +1,12 @@
 package com.zhsq.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.zhsq.mapper.FeeMapper;
+import com.zhsq.pojo.Company;
 import com.zhsq.pojo.Fee;
+import com.zhsq.pojo.Result;
 import com.zhsq.pojo.dto.FeeDetailDTO;
 import com.zhsq.pojo.dto.FeePayDTO;
 import com.zhsq.pojo.vo.FeeVO;
@@ -87,7 +91,10 @@ public class FeeServiceImpl extends ServiceImpl<FeeMapper, Fee> implements FeeSe
     * 实现用户缴费*/
     public Fee userPayment(FeePayDTO feePayDTO) {
         Fee fee=new Fee();
+        String companyId = feePayDTO.getCompanyId();
+        Company one = Db.lambdaQuery(Company.class).eq(Company::getCompanyId, companyId).one();
         BeanUtils.copyProperties(feePayDTO,fee);
+        fee.setFeeType(one.getFeeType());
         fee.setPayStatus(1);
         save(fee);
         Integer id = fee.getId();

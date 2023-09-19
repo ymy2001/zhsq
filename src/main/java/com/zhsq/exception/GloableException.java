@@ -11,6 +11,6 @@ public class GloableException {
     @ExceptionHandler(Exception.class)
     public Result ex(Exception e) {
         e.printStackTrace();
-        return Result.error("ERROR");
+        return Result.error("服务器错误");
     }
 }
