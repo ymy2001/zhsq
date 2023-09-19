@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhsq.pojo.Fee;
 import com.zhsq.pojo.dto.FeeDetailDTO;
 import com.zhsq.pojo.dto.FeePayDTO;
+import com.zhsq.pojo.vo.FeePageVO;
 import com.zhsq.pojo.vo.FeeVO;
 
 import java.time.LocalDateTime;
@@ -27,4 +28,8 @@ public interface FeeService extends IService<Fee> {
     /*
     * 支付各种费用*/
     Fee userPayment(FeePayDTO feePayDTO);
+
+    /*
+    * 分页缴费记录查询*/
+    FeePageVO getByAll(Integer page, Integer pageSize, LocalDateTime detailTime, Integer feeType, Integer currentId);
 }

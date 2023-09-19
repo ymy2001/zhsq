@@ -24,6 +24,7 @@
         </where>
         and fee>0
         and user_id=#{id}
+        order by pay_time desc
     </select>
 
 

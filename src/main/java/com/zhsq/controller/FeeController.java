@@ -2,14 +2,18 @@ package com.zhsq.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.zhsq.context.BaseContext;
+import com.zhsq.mapper.FeeMapper;
 import com.zhsq.pojo.Fee;
 import com.zhsq.pojo.Owner;
 import com.zhsq.pojo.Result;
+import com.zhsq.pojo.UserAddress;
 import com.zhsq.pojo.dto.FeeDetailDTO;
 import com.zhsq.pojo.dto.FeePayDTO;
+import com.zhsq.pojo.vo.FeePageVO;
 import com.zhsq.pojo.vo.FeeVO;
 import com.zhsq.service.FeeService;
 import com.zhsq.utils.DateUtils;
@@ -38,6 +42,8 @@ public class FeeController {
      */
     @Autowired
     private FeeService feeService;
+    @Autowired
+    private FeeMapper feeMapper;
  
      /**
    * 分页查询
@@ -63,6 +69,21 @@ public class FeeController {
        BaseContext.removeCurrentId();
        return Result.success(feeVO);
    }
+   /*
+   * 费用查询，带有分页*/
+   @GetMapping("/detailpage")
+    public Result<FeePageVO> pageFee(
+           @RequestParam(defaultValue = "1") Integer page,
+           @RequestParam(defaultValue = "4") Integer pageSize,
+           @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime detailTime,
+           Integer feeType
+   ){
+       log.info("费用查询：");
+       Integer currentId = BaseContext.getCurrentId();
+       FeePageVO feePageVO=feeService.getByAll(page,pageSize,detailTime,feeType,currentId);
+       BaseContext.removeCurrentId();
+        return Result.success(feePageVO);
+    }
    @GetMapping("/detail")
    public Result<List<FeeDetailDTO>> feeDetail(
            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime detailTime,
@@ -72,6 +93,7 @@ public class FeeController {
        Integer currentId = BaseContext.getCurrentId();
        log.info("查询时间：{}，费用类型：{},当前操作用户id：{}",detailTime,feeType,currentId);
        List<FeeDetailDTO> feeDtail=feeService.getDetailByTimeAndType(detailTime,feeType,currentId);
+       BaseContext.removeCurrentId();
        return Result.success(feeDtail);
    }
    /*

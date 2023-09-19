@@ -1,14 +1,16 @@
 package com.zhsq.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhsq.mapper.FeeMapper;
 import com.zhsq.pojo.Company;
 import com.zhsq.pojo.Fee;
-import com.zhsq.pojo.Result;
 import com.zhsq.pojo.dto.FeeDetailDTO;
 import com.zhsq.pojo.dto.FeePayDTO;
+import com.zhsq.pojo.vo.FeePageVO;
 import com.zhsq.pojo.vo.FeeVO;
 import com.zhsq.service.FeeService;
 import com.zhsq.utils.DateUtils;
@@ -100,5 +102,34 @@ public class FeeServiceImpl extends ServiceImpl<FeeMapper, Fee> implements FeeSe
         Integer id = fee.getId();
         log.info("返回id测试：{}",id);
         return fee;
+    }
+
+    /*
+    * 分页缴费记录实现*/
+    public FeePageVO getByAll(Integer page, Integer pageSize, LocalDateTime detailTime, Integer feeType, Integer currentId) {
+        //设置分页参数
+        PageHelper.startPage(page,pageSize);
+        //构建单个月的日期限制条件
+        LocalDateTime firstTime = detailTime.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDateTime lastTime=detailTime.with(TemporalAdjusters.lastDayOfMonth());
+        firstTime=LocalDateTime.of(LocalDate.from(firstTime), LocalTime.MIN);
+        lastTime=LocalDateTime.of(LocalDate.from(lastTime), LocalTime.MAX);
+        lastTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        firstTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        log.info("获取当前月份最后一天：{},第一天：{}",lastTime,firstTime);
+        Date begin = DateUtils.toDate(firstTime);
+        Date last = DateUtils.toDate(lastTime);
+        List<Fee> feeList = baseMapper.selectFeeDetail(begin,last,currentId,feeType);
+        List<FeeDetailDTO> collect = feeList.stream()
+                .map(fee -> {
+                    FeeDetailDTO feeDetailDTO = new FeeDetailDTO();
+                    BeanUtils.copyProperties(fee, feeDetailDTO);
+                    return feeDetailDTO;
+                })
+                .collect(Collectors.toList());
+        //获取分页信息
+        PageInfo<FeeDetailDTO> pageInfo = new PageInfo<>(collect);
+        //封装结果
+        return new FeePageVO(pageInfo.getTotal(),pageInfo.getList());
     }
 }
