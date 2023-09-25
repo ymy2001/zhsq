@@ -2,7 +2,6 @@ package com.zhsq.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhsq.context.BaseContext;
 import com.zhsq.mapper.UserAddressMapper;
 import com.zhsq.pojo.UserAddress;
 import com.zhsq.service.UserAddressService;

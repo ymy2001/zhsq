@@ -1,12 +1,10 @@
 package com.zhsq.pojo;
- 
-import java.util.Date;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.io.Serializable;
-import lombok.Data;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
+import java.util.Date;
 /**
  * 志愿项目表(VolunteerProjects)表实体类
  *

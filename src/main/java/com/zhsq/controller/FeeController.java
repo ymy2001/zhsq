@@ -2,7 +2,6 @@ package com.zhsq.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.zhsq.context.BaseContext;
@@ -10,7 +9,6 @@ import com.zhsq.mapper.FeeMapper;
 import com.zhsq.pojo.Fee;
 import com.zhsq.pojo.Owner;
 import com.zhsq.pojo.Result;
-import com.zhsq.pojo.UserAddress;
 import com.zhsq.pojo.dto.FeeDetailDTO;
 import com.zhsq.pojo.dto.FeePayDTO;
 import com.zhsq.pojo.vo.FeePageVO;

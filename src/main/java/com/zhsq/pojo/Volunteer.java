@@ -1,11 +1,8 @@
 package com.zhsq.pojo;
- 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.io.Serializable;
-import lombok.Data;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 /**
  * 志愿者表(Volunteer)表实体类
  *

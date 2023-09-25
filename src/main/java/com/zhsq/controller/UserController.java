@@ -112,6 +112,12 @@ public class UserController {
         if (Objects.equals(password, "")){
             return Result.error("修改失败");
         }
+        if (Objects.equals(username, "")){
+            return Result.error("修改失败");
+        }
+        if (Objects.equals(phoneNumber, "")){
+            return Result.error("修改失败");
+        }
         if (password!=null){
             log.info("pwd:{}",password);
             password= DigestUtils.md5DigestAsHex(password.getBytes());
