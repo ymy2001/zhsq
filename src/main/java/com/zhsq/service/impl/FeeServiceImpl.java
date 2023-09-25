@@ -124,6 +124,7 @@ public class FeeServiceImpl extends ServiceImpl<FeeMapper, Fee> implements FeeSe
                 .map(fee -> {
                     FeeDetailDTO feeDetailDTO = new FeeDetailDTO();
                     BeanUtils.copyProperties(fee, feeDetailDTO);
+
                     return feeDetailDTO;
                 })
                 .collect(Collectors.toList());

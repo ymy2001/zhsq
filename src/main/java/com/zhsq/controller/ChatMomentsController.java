@@ -48,6 +48,7 @@ public class ChatMomentsController {
         Integer currentId = BaseContext.getCurrentId();
         log.info("操作用户：{},提交信息：{}",currentId,chatMomentDTO);
         chatMomentsService.publicChatMoment(currentId,chatMomentDTO);
+        BaseContext.removeCurrentId();
         return Result.success("发布成功");
     }
      /**

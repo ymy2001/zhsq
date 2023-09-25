@@ -4,6 +4,7 @@ package com.zhsq.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhsq.pojo.ParkingSpace;
+import com.zhsq.pojo.Result;
 import com.zhsq.service.ParkingSpaceService;
 import com.zhsq.utils.R;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
- 
+
+import java.util.List;
+
 /**
  * 停车位表(ParkingSpace)表控制层
  *
@@ -45,5 +48,13 @@ public class ParkingSpaceController {
    	//执行查询
    	parkingSpaceService.page(parkingSpacePage);
    	return R.success(parkingSpacePage);
+   }
+   /*
+   * 获取停车场数据*/
+    @GetMapping
+   public Result<List<ParkingSpace>> getUse(){
+       log.info("停车场车位查询");
+        List<ParkingSpace> list = parkingSpaceService.list();
+        return Result.success(list);
    }
 }
