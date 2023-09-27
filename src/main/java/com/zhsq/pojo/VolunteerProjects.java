@@ -1,5 +1,6 @@
 package com.zhsq.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,11 @@ public class VolunteerProjects {
     private String name;
     //发布团队 
     private String pName;
-    //发布时间 
+    //发布时间
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm",timezone="Asia/Shanghai")
     private Date pTime;
-    //结束时间 
+    //结束时间
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm",timezone="Asia/Shanghai")
     private Date eTime;
     //计划人数 
     private Integer plan;

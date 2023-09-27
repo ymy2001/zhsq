@@ -5,7 +5,7 @@
     <resultMap type="com.zhsq.pojo.Parking" id="ParkingMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
-        <result property="ownerId" column="owner_id" jdbcType="INTEGER"/>
+        <result property="ownerId" column="owner_id" jdbcType="VARCHAR"/>
         <result property="communityName" column="community_name" jdbcType="VARCHAR"/>
         <result property="parkingStatus" column="parking_status" jdbcType="INTEGER"/>
         <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
