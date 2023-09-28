@@ -1,0 +1,39 @@
+#server:
+#port: 9090
+#myp设置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+#mysql配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/intelligent_community
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  main:
+    banner-mode: off
+  #文件上传限制
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+#阿里云配置文件
+aliyun:
+  oss:
+    file:
+      endpoint:
+      KeyId:
+      KeySecret:
+      bucketName:
+
+#spring事务管理日志
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug

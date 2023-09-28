@@ -26,7 +26,6 @@ public class VolunteerController {
      */
     @Autowired
     private VolunteerService volunteerService;
- 
      /**
    * 分页查询
    * @param page 查询页数
