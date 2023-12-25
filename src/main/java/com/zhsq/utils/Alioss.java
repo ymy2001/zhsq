@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss.file")
 public class Alioss {
-    private String endpoint;
-    private String KeyId;
-    private String KeySecret;
+    private String endPoint;
+    private String keyId;
+    private String keySecret;
     private String bucketName;
 
 }

@@ -28,10 +28,10 @@ spring:
 aliyun:
   oss:
     file:
-      endpoint:
-      KeyId:
-      KeySecret:
-      bucketName:
+      endpoint: https://oss-cn-beijing.aliyuncs.com
+      KeyId: LTAI5tKWM2co3x52uFtRvsZy
+      KeySecret: PvXajAMuJvQAYsNsBaySk5Qq6ZkH8G
+      bucketName: ymyaccbucket
 
 #spring事务管理日志
 logging:

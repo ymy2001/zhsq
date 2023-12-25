@@ -19,8 +19,7 @@ public class Webconfig implements WebMvcConfigurer {
         log.info("注册拦截器");
         //配置拦截路径
         registry.addInterceptor(loginCheckIntercepter).addPathPatterns("/**").excludePathPatterns("/login")
-                .excludePathPatterns("/register")
-                .excludePathPatterns("/swagger");
+                .excludePathPatterns("/register");
 
     }
 }

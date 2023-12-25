@@ -136,6 +136,26 @@
             <artifactId>okhttp-sse</artifactId>
             <version>3.14.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
