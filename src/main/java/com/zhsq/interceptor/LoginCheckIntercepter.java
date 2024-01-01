@@ -43,7 +43,6 @@ public class LoginCheckIntercepter implements HandlerInterceptor {
             //获取请求头
             jwt = req.getHeader("Authorization");
             //判断jwt存在
-            //log.info("这是前端的token:{}",jwt);
             if (!StringUtils.hasLength(jwt)){
                 log.info("token不存在");
                 Result error=Result.error("NOT_LOGIN");
